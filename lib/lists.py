@@ -1,3 +1,5 @@
+#!/usr/bin/python3.11.8
+
 class Node(object):
     """
     `A simple class for abstracting nodes in linked list.`
