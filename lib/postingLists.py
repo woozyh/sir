@@ -1,35 +1,38 @@
-from lists import list
-from os    import listdir
+from os             import listdir
+from sys            import getsizeof
+from reader         import Reader
+from lists          import InvertedList
 from nltk.tokenize  import word_tokenize
 
 class InvertedIndex(object):
     
     def __init__(self) -> None:
         self.dictionary = dict()
-        self.my_list    = list()
 
-    def readDocs(self, path: str):
+    def buildIndex(self, path: str):
         for doc in listdir(path):
-            file = open(f"{path}{doc}", "r")
-            lines = (line.strip().split() for line in file.readlines())
+            lines = Reader(path+doc).read()
             while True:
                 try:       
-                    line = word_tokenize(' '.join(next(lines)))
+                    line = word_tokenize(next(lines))
                     for term in line:
                         if term not in self.dictionary:
-                            self.dictionary[term] = list()
+                            self.dictionary[term] = InvertedList()
                             self.dictionary[term].addToTail(listdir(path).index(doc))
-                        elif (term in self.dictionary) and (self.dictionary[term].size == listdir(path).index(doc)):
+                        elif (term in self.dictionary) and (self.dictionary[term].tail.docId != listdir(path).index(doc)):
                             self.dictionary[term].addToTail(listdir(path).index(doc))
                 except StopIteration:
-                    file.close()
                     break
         print()
-class PositionalIndex():
+
+class PositionalIndex(object):
 
     def __init__(self) -> None:
-        
+        self.dictionary = dict()
+
+    def buildIndex(self, path: str):
         pass
 
 ins = InvertedIndex()
-ins.readDocs("/home/woozy/mine/sir/docs/")
+ins.buildIndex("/home/woozy/mine/sir/docs/")
+print(getsizeof(ins.dictionary))

@@ -1,18 +1,8 @@
 #!/usr/bin/python3.11.8
 
-class Node(object):
-    """
-    `A simple class for abstracting nodes in linked list.`
-    `docId`: gets an integer value for document id.
-    `next`: gets the next node for pointing.
-    """    
-    __slots__ = ('docId', 'next')
-    def __init__(self, docId: int, next=None) -> None:
-        self.docId = docId
-        self.next  = next
+from nodes import InvertedIndexNodes, PositionalIndexNodes
 
-
-class list(object):
+class InvertedList(object):
 
     """
     A simple linked list implementation with 3 parameter:
@@ -30,7 +20,7 @@ class list(object):
         return self.size == 0
     
     def addToTail(self, docId: int) -> None:
-        newDoc = Node(docId)
+        newDoc = InvertedIndexNodes(docId)
         if (self.isEmpty()):
             self.head = self.tail = newDoc
         else: 
