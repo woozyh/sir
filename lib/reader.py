@@ -12,5 +12,6 @@ class Reader(object):
         self.file.close()
         return lines
 
-
+class PositionalReader(object):
+    pass
 

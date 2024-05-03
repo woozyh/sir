@@ -1,6 +1,6 @@
 #!/usr/bin/python3.11.8
 
-from nodes import InvertedIndexNodes, PositionalIndexNodes
+from nodes import InvertedIndexNodes
 
 class InvertedList(object):
 
@@ -27,3 +27,4 @@ class InvertedList(object):
             self.tail.next = newDoc
             self.tail = newDoc
         self.size += 1
+
