@@ -10,6 +10,7 @@ class InvertedIndex(object):
     def __init__(self) -> None:
         self.dictionary = dict()
         self.stopWords = ['i','i\'m', 'I\'m', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
+        self.sizeInByte = 0
 
     def removeJunks(self, lineIn):
         lineInLower=lineIn.lower()
@@ -31,13 +32,18 @@ class InvertedIndex(object):
                             self.dictionary[term].addToTail(listdir(path).index(doc))
                 except StopIteration:
                     break
-        print(self.dictionary.keys())
+
+    def size(self):
+        s = [getsizeof(self.dictionary[_]) for _ in self.dictionary]
+        return sum(s)
+
 
 class PositionalIndex(object):
 
     def __init__(self) -> None:
         self.dictionary = dict()
         self.stopWords = ['i','i\'m', 'I\'m', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
+        self.sizeInByte = 0
 
     def removeJunks(self, lineIn):
         lineInLower = lineIn.lower()
@@ -65,12 +71,15 @@ class PositionalIndex(object):
                     noDocs += 1
                     lineNo = 0
                     break
-        print(self.dictionary.keys())
+
+    def size(self):
+        s = [getsizeof(self.dictionary[_]) for _ in self.dictionary]
+        return sum(s)
 
 inv = InvertedIndex()
 inv.buildIndex("/home/woozy/mine/sir/docs/")
-print(getsizeof(inv.dictionary))
 
 pos = PositionalIndex()
 pos.buildIndex("/home/woozy/mine/sir/docs/")
-print(getsizeof(pos.dictionary))
+
+print(f"InvertedIndexSize: {inv.size()}-Byte (real: {getsizeof(inv.dictionary)}-Byte) \nPositionalIndexSize: {pos.size()}-Byte (real {getsizeof(pos.dictionary)}-Byte)")
