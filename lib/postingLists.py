@@ -2,14 +2,25 @@ from os             import listdir
 from sys            import getsizeof
 from reader         import Reader
 from lists          import InvertedList
-from nltk.tokenize  import word_tokenize
 from hashlib        import md5
+from nltk.tokenize  import word_tokenize
+from stopWords      import words
 
 class InvertedIndex(object):
-    
+
+    """
+        Basic implementation for inverted index posting lists.
+        __init__: it just produces a dict for storing inveted index lists and list of available
+                 words.
+        removeJunks: this function simply remove white spaces and do some normalization
+                (ignore coments).
+        buildMatrix: this function is the core function for producing the inverted index
+                matrix.
+    """
+
     def __init__(self) -> None:
         self.dictionary = dict()
-        self.stopWords = ['i','i\'m', 'I\'m', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
+        self.stopWords = words
         self.sizeInByte = 0
 
     def removeJunks(self, lineIn):
@@ -35,14 +46,25 @@ class InvertedIndex(object):
 
     def size(self):
         s = [getsizeof(self.dictionary[_]) for _ in self.dictionary]
+        print()
         return sum(s)
 
 
 class PositionalIndex(object):
 
+    """
+        Basic implementation for positional inverted index posting lists.
+        __init__: it just produces a dict for storing inveted index lists and list of available
+                stop words.
+        removeJunks: this function simply remove white spaces and do some normalization
+                (ignore coments).
+        buildMatrix: this function is the core function for producing the postional inverted index 
+                matrix.
+    """
+
     def __init__(self) -> None:
         self.dictionary = dict()
-        self.stopWords = ['i','i\'m', 'I\'m', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
+        self.stopWords = words
         self.sizeInByte = 0
 
     def removeJunks(self, lineIn):
