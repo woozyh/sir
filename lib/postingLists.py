@@ -104,4 +104,4 @@ inv.buildIndex("/home/woozy/mine/sir/docs/")
 pos = PositionalIndex()
 pos.buildIndex("/home/woozy/mine/sir/docs/")
 
-print(f"InvertedIndexSize: {inv.size()}-Byte (real: {getsizeof(inv.dictionary)}-Byte) \nPositionalIndexSize: {pos.size()}-Byte (real {getsizeof(pos.dictionary)}-Byte)")
+print(f"InvertedIndexSize: {inv.size()}-Byte ({getsizeof(inv.dictionary)}-Byte (compressed by python dict(not real))) \nPositionalIndexSize: {pos.size()}-Byte ({getsizeof(pos.dictionary)}-Byte compressed by python dict(not real))")
