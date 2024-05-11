@@ -24,7 +24,7 @@ class InvertedIndex(object):
         self.sizeInByte = 0
 
     def removeJunks(self, lineIn):
-        lineInLower=lineIn.lower()
+        lineInLower = lineIn.lower()
         lineInRmdSplChars = lineInLower.replace('.',' ').replace(';',' ').replace(',',' ').replace('?',' ').replace('!',' ').replace(':',' ')
         # rmdStopWordsLn = ' '.join(w for w in lineInRmdSplChars.split() if w.lower() not in self.stopWords)
         return lineInRmdSplChars
@@ -38,9 +38,9 @@ class InvertedIndex(object):
                     for term in line:
                         if term not in self.dictionary and term not in self.stopWords:
                             self.dictionary[term] = InvertedList()
-                            self.dictionary[term].addToTail(listdir(path).index(doc))
-                        elif term in self.dictionary and term not in self.stopWords and self.dictionary[term].tail.docId != listdir(path).index(doc):
-                            self.dictionary[term].addToTail(listdir(path).index(doc))
+                            self.dictionary[term].addToTail(listdir(path).index(doc)+1)
+                        elif term in self.dictionary and term not in self.stopWords and self.dictionary[term].tail.docId != listdir(path).index(doc)+1:
+                            self.dictionary[term].addToTail(listdir(path).index(doc)+1)
                 except StopIteration:
                     break
 
@@ -96,6 +96,7 @@ class PositionalIndex(object):
 
     def size(self):
         s = [getsizeof(self.dictionary[_]) for _ in self.dictionary]
+        print()
         return sum(s)
 
 inv = InvertedIndex()
